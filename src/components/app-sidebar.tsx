@@ -8,6 +8,7 @@ import {
   IconCalendarEvent,
 } from "@tabler/icons-react";
 
+import { createClient } from "@/lib/supabase/client";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
 import {
@@ -21,11 +22,6 @@ import {
 } from "@/components/ui/sidebar";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -46,6 +42,34 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [user, setUser] = React.useState({
+    name: "",
+    email: "",
+    avatar: "",
+  });
+
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("users")
+          .select("*")
+          .eq("id", user.id)
+          .single();
+        setUser({
+          name: profile?.name || "",
+          email: user.email || "",
+          avatar: profile?.avatar_url || "",
+        });
+      }
+    };
+    fetchUser();
+  }, []);
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -67,7 +91,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   );
