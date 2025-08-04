@@ -30,7 +30,7 @@ const data = {
     },
     {
       title: "Projects",
-      url: "#",
+      url: "/projects",
       icon: IconFolder,
     },
     {
@@ -78,6 +78,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
+              onClick={() => console.log("Sidebar button clicked")}
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
