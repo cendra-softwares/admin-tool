@@ -15,15 +15,15 @@ export default function ProjectsPage() {
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [loading, setLoading] = React.useState(true);
 
-  React.useEffect(() => {
-    const fetchProjects = async () => {
-      const projects = await getProjects();
-      setProjects(projects);
-      setLoading(false);
-    };
-
-    fetchProjects();
+  const fetchProjects = React.useCallback(async () => {
+    const projects = await getProjects();
+    setProjects(projects);
+    setLoading(false);
   }, []);
+
+  React.useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   return (
     <SidebarProvider
@@ -47,7 +47,7 @@ export default function ProjectsPage() {
                 {loading ? (
                   <DataTableSkeleton />
                 ) : (
-                  <DataTable data={projects} columns={columns} />
+                  <DataTable data={projects} columns={columns(fetchProjects)} />
                 )}
               </div>
             </div>
