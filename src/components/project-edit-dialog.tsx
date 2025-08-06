@@ -25,13 +25,13 @@ import { useState, useEffect } from "react";
 import { updateProject } from "@/lib/supabase/mutations";
 import { useRouter } from "next/navigation";
 
-interface ProjectDetailsDialogProps {
+interface ProjectEditDialogProps {
   project: Project;
   children: React.ReactNode;
   refreshData: () => void;
 }
 
-export function ProjectDetailsDialog({ project, children, refreshData }: ProjectDetailsDialogProps) {
+export function ProjectEditDialog({ project, children, refreshData }: ProjectEditDialogProps) {
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [formData, setFormData] = useState<Project>(project);

@@ -22,7 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ProjectDetailsDialog } from "@/components/project-details-dialog"; // Added ProjectDetailsDialog
+import { ProjectOverviewResponsive } from "@/components/project-overview-responsive";
 
 export const columns = (refreshData: () => void): ColumnDef<Project>[] => [
   {
@@ -134,12 +134,12 @@ export const columns = (refreshData: () => void): ColumnDef<Project>[] => [
     cell: ({ row }) => {
       const project = row.original;
       return (
-        <ProjectDetailsDialog project={project} refreshData={refreshData}>
+        <ProjectOverviewResponsive project={project} refreshData={refreshData}>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">View project details</span>
             <IconEye className="h-4 w-4" />
           </Button>
-        </ProjectDetailsDialog>
+        </ProjectOverviewResponsive>
       );
     },
   },

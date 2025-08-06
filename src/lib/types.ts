@@ -7,4 +7,5 @@ export type Project = {
   company_id: string | null;
   contact_number: string | null;
   user_id: string | null;
+  image_urls: string[] | null;
 };

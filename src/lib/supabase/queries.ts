@@ -6,7 +6,7 @@ import { unstable_noStore as noStore } from "next/cache";
 export async function getProjects() {
   noStore();
   const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase.from("projects").select("*");
+  const { data, error } = await supabase.from("projects").select("*, image_urls");
 
   if (error) {
     console.error("Error fetching projects:", error);
