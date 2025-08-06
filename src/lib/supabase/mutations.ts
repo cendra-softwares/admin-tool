@@ -66,3 +66,54 @@ export async function deleteProjectImage(imageUrl: string) {
     throw error;
   }
 }
+
+export async function createNewAttendanceToken() {
+  const token = Math.random().toString(36).substring(2, 12);
+  const { data, error } = await supabase
+    .from("attendance_tokens")
+    .insert([{ token }])
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error creating new attendance token:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function markAttendance(
+  employeeId: string,
+  scannedToken: string,
+  type: "check-in" | "check-out"
+) {
+  const { data, error } = await supabase.from("attendance").insert([
+    {
+      employee_id: employeeId,
+      scanned_token: scannedToken,
+      type,
+    },
+  ]);
+
+  if (error) {
+    console.error("Error marking attendance:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function markTokenAsUsed(tokenId: string, userId: string) {
+  const { data, error } = await supabase
+    .from("attendance_tokens")
+    .update({ used_by_id: userId })
+    .eq("id", tokenId);
+
+  if (error) {
+    console.error("Error marking token as used:", error);
+    throw error;
+  }
+
+  return data;
+}

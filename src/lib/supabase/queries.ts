@@ -42,3 +42,21 @@ export async function getUser() {
 
   return userData;
 }
+
+export async function getLatestAttendanceToken() {
+  noStore();
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("attendance_tokens")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (error) {
+    console.error("Error fetching latest attendance token:", error);
+    return null;
+  }
+
+  return data;
+}
