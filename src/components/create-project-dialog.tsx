@@ -81,7 +81,7 @@ export function CreateProjectDialog() {
     const contact_number = formData.get("contact_number") as string;
 
     console.log("Submitting project:", { name, description, status, contact_number, user_id: user.id, company_id: userData.company_id });
-    const result = await createProject({ name, description, status, contact_number, user_id: user.id, company_id: userData.company_id });
+    const result = await createProject({ name, description, status, contact_number, user_id: user.id, company_id: userData.company_id, image_urls: [] });
 
     setIsLoading(false);
 
