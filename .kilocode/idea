@@ -1,0 +1,1 @@
+-- can send attendance to the owener if the user is unable to scan the qr code , the notifcation will have the time of sending and owner can accept or decline
